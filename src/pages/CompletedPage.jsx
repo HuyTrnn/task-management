@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import FocusCard from "../components/FocusCard/FocusCard";
 import Lists from "../components/Lists/Lists";
 import Time from "../components/Time/Time";
 import TaskForm from "../components/TaskForm/TaskForm";
@@ -9,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { showSuccessToast, showErrorToast } from "../services/toastService";
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function MainPage() {
+export default function CompletedPage() {
   const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,10 +17,12 @@ export default function MainPage() {
   const loadTasks = useCallback(() => {
     setIsLoading(true);
     try {
-      const loadedTasks = getTasks();
-      setTasks(loadedTasks);
+      const allTasks = getTasks();
+      // Filter tasks with status "Done" (status === 3)
+      const completedTasks = allTasks.filter(task => task.status === 3);
+      setTasks(completedTasks);
     } catch {
-      showErrorToast('Failed to load tasks');
+      showErrorToast('Failed to load completed tasks');
     } finally {
       setIsLoading(false);
     }
@@ -125,9 +126,6 @@ export default function MainPage() {
           </Button>
         </div>
       </div>
-      {/* <div className=''>
-          <FocusCard />
-      </div> */}
       <div>
         <Lists 
           tasks={tasks}
@@ -147,4 +145,4 @@ export default function MainPage() {
       />
     </div>
   );
-}
+} 

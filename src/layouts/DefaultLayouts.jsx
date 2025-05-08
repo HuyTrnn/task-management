@@ -10,7 +10,6 @@ export default function DefaultLayouts() {
         {/* Sidebar */}
         <Sidebar />
   
-        {/* Main content */}
         <main className="flex-1 overflow-auto">
           <div className="mx-auto h-full">
             <Outlet />
