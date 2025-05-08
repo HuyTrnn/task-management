@@ -33,7 +33,7 @@ export default function ItemTitle({ item, onEditTask }) {
           {getStatusText(item.status)}
         </Tag>
         <Tag color={getPriorityColor(item.priority)}>
-          {getPriorityText(item.priority)} Priority
+          {getPriorityText(item.priority)}
         </Tag>
       </div>
       <div className="flex items-center space-x-2">

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Modal, Form, Input, Select, Button, DatePicker } from 'antd';
 import { showErrorToast } from '../../services/toastService';
 import dayjs from 'dayjs';
+import { TASK_STATUS, TASK_STATUS_LABELS } from '../../constants/status';
+import { TASK_PRIORITY, TASK_PRIORITY_LABELS } from '../../constants/priority';
 
 const { TextArea } = Input;
 
@@ -23,7 +25,6 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      // Convert dates to ISO string for storage
       const formattedValues = {
         ...values,
         startDate: values.startDate?.toISOString(),
@@ -31,7 +32,7 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
       };
       await onSubmit(formattedValues);
     } catch (error) {
-      console.error('Validation failed:', error);
+      console.error('Add failed:', error);
       showErrorToast('Please fill in all required fields correctly');
     }
   };
@@ -88,7 +89,6 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
         <Form.Item
           name="startDate"
           label="Start Date"
-          rules={[{ message: 'Please select start date' }]}
         >
           <DatePicker 
             className="w-full"
@@ -102,7 +102,6 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
           name="endDate"
           label="End Date"
           rules={[
-            { message: 'Please select end date' },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || !getFieldValue('startDate') || value.isAfter(getFieldValue('startDate'))) {
@@ -127,9 +126,9 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
           rules={[{ required: true, message: 'Please select priority' }]}
         >
           <Select placeholder="Select priority">
-            <Select.Option value={1}>Urgent</Select.Option>
-            <Select.Option value={2}>Medium</Select.Option>
-            <Select.Option value={3}>Low</Select.Option>
+            <Select.Option value={TASK_PRIORITY.LOW}>{TASK_PRIORITY_LABELS[TASK_PRIORITY.LOW]}</Select.Option>
+            <Select.Option value={TASK_PRIORITY.MEDIUM}>{TASK_PRIORITY_LABELS[TASK_PRIORITY.MEDIUM]}</Select.Option>
+            <Select.Option value={TASK_PRIORITY.URGENT}>{TASK_PRIORITY_LABELS[TASK_PRIORITY.URGENT]}</Select.Option>
           </Select>
         </Form.Item>
 
@@ -139,9 +138,9 @@ const TaskForm = ({ isOpen, onClose, onSubmit, isLoading, editTask }) => {
           rules={[{ required: true, message: 'Please select status' }]}
         >
           <Select placeholder="Select status">
-            <Select.Option value={1}>To Do</Select.Option>
-            <Select.Option value={2}>In Progress</Select.Option>
-            <Select.Option value={3}>Done</Select.Option>
+            <Select.Option value={TASK_STATUS.TODO}>{TASK_STATUS_LABELS[TASK_STATUS.TODO]}</Select.Option>
+            <Select.Option value={TASK_STATUS.IN_PROGRESS}>{TASK_STATUS_LABELS[TASK_STATUS.IN_PROGRESS]}</Select.Option>
+            <Select.Option value={TASK_STATUS.DONE}>{TASK_STATUS_LABELS[TASK_STATUS.DONE]}</Select.Option>
           </Select>
         </Form.Item>
       </Form>

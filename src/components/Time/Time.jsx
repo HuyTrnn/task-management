@@ -32,9 +32,9 @@ const Time = () => {
 
   return (
     <div className="flex flex-col items-start justify-start">
-      <p className="text-gray-600 font-medium">My Days</p>
+      <p className="text-gray-600 font-bold text-2xl">My Days</p>
       <div className="flex items-center">
-        <span className="text-blue-600 font-medium min-w-[80px]"> {getFormattedTime()}, </span>
+        <span className="text-blue-600 font-medium min-w-[80px]"> {getFormattedTime()} - </span>
         <span className="text-gray-800">{getFormattedDate()}</span>
       </div>
     </div>

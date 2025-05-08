@@ -1,7 +1,7 @@
 export const getStatusText = (status) => {
   switch (status) {
     case 1:
-      return "Urgent";
+      return "To Do";
     case 2:
       return "In Progress";
     case 3:
@@ -27,7 +27,7 @@ export const getStatusColor = (status) => {
 export const getPriorityText = (priority) => {
   switch (priority) {
     case 1:
-      return "High";
+      return "Urgent";
     case 2:
       return "Medium";
     case 3:
